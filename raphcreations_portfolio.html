@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A&R Creations — website development, search engine optimization, and social media management." />
+  <title>A&amp;R Creations | Digital Services</title>
+  <style>
+    :root {
+      --bg: #020b18;
+      --panel: #04142a;
+      --panel2: #061a34;
+      --line: #10365f;
+      --blue: #078cff;
+      --cyan: #05c4f4;
+      --text: #f4f8ff;
+      --muted: #b5c8e2;
+      --green: #16b86a;
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 82px; }
+    body {
+      margin: 0; color: var(--text); background: var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    .container { width: min(1240px, calc(100% - 40px)); margin: 0 auto; }
+    header {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(3, 13, 30, .94); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(27, 92, 151, .28);
+    }
+    .nav { min-height: 62px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 850; letter-spacing: -.7px; white-space: nowrap; }
+    .brand-mark { color: var(--blue); font-size: 31px; font-weight: 900; line-height: 1; }
+    .brand span:last-child { color: var(--cyan); }
+    .brand b { color: #fff; }
+    .nav-links { display: flex; align-items: center; gap: clamp(18px, 3vw, 46px); }
+    .nav-links a { color: #e7efff; font-size: 14px; padding: 20px 0 17px; border-bottom: 3px solid transparent; transition: .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--cyan); border-color: var(--blue); }
+    .btn {
+      border: 1px solid var(--blue); border-radius: 999px; padding: 11px 19px;
+      display: inline-flex; justify-content: center; align-items: center; gap: 9px;
+      color: white; background: linear-gradient(120deg, #078cff, #0065e8);
+      font-weight: 750; font-size: 13px; cursor: pointer; transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px #007bff40; }
+    .btn.outline { background: transparent; color: #e9f5ff; }
+    .btn.small { padding: 9px 16px; font-size: 12px; }
+    .menu-toggle { display: none; color: white; background: none; border: 1px solid var(--line); border-radius: 9px; padding: 7px 11px; font-size: 22px; cursor: pointer; }
+    .hero {
+      overflow: hidden; position: relative; border-bottom: 1px solid rgba(20, 78, 130, .45);
+      background: radial-gradient(ellipse at 64% 58%, #0347a7 0, #031c42 21%, transparent 46%), linear-gradient(105deg, #020a16 0%, #020d20 58%, #020916 100%);
+    }
+    .hero-inner { min-height: 342px; display: grid; grid-template-columns: 1fr .6fr; align-items: center; gap: 20px; position: relative; }
+    .eyebrow { letter-spacing: 3px; color: #d2e8ff; font-size: 13px; margin: 0 0 3px; }
+    h1 { margin: 0; font-size: clamp(34px, 3.3vw, 48px); line-height: .99; letter-spacing: -1.8px; }
+    .gradient-text { display: block; color: var(--cyan); }
+    .role { font-size: clamp(18px, 1.7vw, 24px); margin: 12px 0 5px; line-height: 1.2; }
+    .intro { max-width: 420px; color: #c6d9f1; font-size: 13px; margin: 0 0 16px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .socials { display: flex; gap: 19px; margin-top: 15px; align-items: center; }
+    .socials a { font-weight: 850; font-size: 19px; width: 23px; height: 23px; display: inline-flex; align-items: center; justify-content: center; transition: .2s; }
+    .socials a:hover { color: var(--cyan); transform: translateY(-2px); }
+    .portrait-wrap { height: 342px; display: flex; align-items: end; justify-content: center; position: relative; }
+    .portrait-glow { position: absolute; width: 90%; height: 70%; bottom: 0; border-radius: 50% 50% 0 0; background: #0077ff45; filter: blur(30px); }
+    .portrait-placeholder {
+      width: min(100%, 340px); height: 315px; position: relative; z-index: 1;
+      display: flex; align-items: end; justify-content: center; overflow: hidden;
+      color: #d7eaff; text-align: center;
+    }
+    .avatar {
+      width: 235px; height: 280px; border-radius: 115px 115px 20px 20px;
+      background: linear-gradient(145deg, #18283d, #050a12 66%); border: 1px solid #23517f;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      box-shadow: 0 0 45px #087bff4d; position: relative; overflow: hidden;
+    }
+    .avatar .head { width: 92px; height: 105px; background: linear-gradient(130deg, #b97853, #75432f); border-radius: 45% 45% 43% 43%; border: 4px solid #171b24; position: relative; margin-top: 8px; }
+    .avatar .hair { position: absolute; top: -5px; left: -1px; width: 94px; height: 37px; border-radius: 60% 60% 25% 25%; background: #101014; }
+    .avatar .body { width: 210px; height: 145px; background: linear-gradient(140deg, #111b2a, #03060d); border-radius: 80px 80px 0 0; margin-top: -1px; border: 1px solid #1e324b; }
+    .avatar-label { position: absolute; bottom: 16px; font-size: 10px; color: #5bd8ff; font-weight: 800; }
+    .handwritten { color: #e7f1ff; font-family: "Segoe Print", "Comic Sans MS", cursive; font-style: italic; font-size: clamp(26px, 2.7vw, 38px); line-height: 1.02; transform: rotate(-8deg); text-align: center; padding-bottom: 18px; }
+    .handwritten strong { color: #7fb9ff; font-weight: 500; display: block; }
+    .scribble { width: 115px; height: 5px; background: var(--blue); border-radius: 10px; transform: rotate(-16deg); margin: 15px auto; }
+    .tagline { font-size: 16px; color: #c4d9f5; transform: rotate(-7deg); text-align: center; }
+    section { border-bottom: 1px solid rgba(20, 78, 130, .36); }
+    .skills-section { background: linear-gradient(100deg, #03142b, #031024); }
+    .skills-row { display: grid; grid-template-columns: 250px 1fr; align-items: center; gap: 25px; padding: 17px 0 15px; }
+    .section-title { font-size: 25px; line-height: 1.2; margin: 0 0 7px; letter-spacing: -.5px; }
+    .section-title .icon { color: var(--blue); margin-right: 10px; }
+    .section-title .accent { color: var(--blue); }
+    .section-copy { color: #c2d4ec; font-size: 14px; margin: 0; max-width: 250px; }
+    .skill-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .skill {
+      min-height: 94px; border: 1px solid #10355c; border-radius: 12px; background: #041329;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 5px;
+      text-align: center; transition: .2s;
+    }
+    .skill:hover { border-color: var(--blue); transform: translateY(-3px); background: #061b37; }
+    .skill-logo { font-size: 31px; font-weight: 900; height: 38px; display: flex; align-items: center; }
+    .skill-logo.blue { color: var(--blue); }
+    .skill-logo.green { color: var(--green); }
+    .skill-logo.cyan { color: var(--cyan); }
+    .skill-name { font-size: 11px; font-weight: 800; margin-top: 2px; }
+    .skill-desc { color: #9eb8d9; font-size: 9px; margin-top: 2px; }
+    .mongo { color: #48c878; } .express { color: #e9efff; background: #202e44; border-radius: 50%; padding: 0 5px; font-size: 22px; }
+    .react { color: #12d9f4; } .node { color: #6edb51; } .git { color: #ff604b; } .js { color: #f6d64a; background: #f6d64a; color: #1a1a1a; font-size: 19px; padding: 0 4px; }
+    .html-logo { color: #ff653f; } .css-logo { color: #168cff; } .tailwind { color: #23c5e8; }
+    .projects-section { background: linear-gradient(110deg, #020a15, #020d1d); padding: 20px 0 9px; }
+    .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 14px; }
+    .view-all { color: var(--cyan); font-size: 13px; font-weight: 750; white-space: nowrap; }
+    .project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .project-card { border: 1px solid #123b66; border-radius: 13px; padding: 6px; background: linear-gradient(145deg, #061a34, #020b19); transition: .25s; overflow: hidden; }
+    .project-card:hover { transform: translateY(-4px); border-color: var(--blue); box-shadow: 0 12px 30px #001b3b80; }
+    .project-preview { height: 145px; border-radius: 8px; overflow: hidden; position: relative; padding: 13px; color: #10213a; background: #f4f7fc; }
+    .preview-bar { height: 20px; display: flex; align-items: center; justify-content: space-between; font-size: 8px; font-weight: 800; border-bottom: 1px solid #e1e8f2; padding-bottom: 6px; }
+    .preview-body { display: flex; align-items: center; justify-content: space-between; gap: 10px; height: calc(100% - 25px); }
+    .preview-title { font-size: 12px; line-height: 1.25; font-weight: 900; max-width: 145px; }
+    .preview-sub { font-size: 7px; color: #61738e; margin-top: 5px; }
+    .mini-btn { background: #087cff; color: white; border-radius: 12px; padding: 4px 8px; font-size: 7px; display: inline-block; margin-top: 8px; }
+    .product-art { display: flex; align-items: end; gap: 5px; }
+    .product-art span { display: flex; align-items: center; justify-content: center; width: 48px; height: 64px; background: linear-gradient(145deg, #e4eaf2, #fff); border-radius: 6px; font-size: 29px; }
+    .task-preview { background: #f3f6fb; padding: 0; display: grid; grid-template-columns: 27% 73%; }
+    .task-side { background: #06264d; color: #d9e8ff; padding: 13px 8px; font-size: 8px; }
+    .task-side b { display: block; margin-bottom: 15px; }
+    .task-side span { display: block; margin: 7px 0; }
+    .task-main { padding: 10px; }
+    .task-main b { font-size: 10px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 7px; }
+    .stats span { background: white; border-radius: 4px; padding: 6px 4px; font-size: 7px; box-shadow: 0 1px 3px #10294b12; }
+    .chart { margin-top: 8px; height: 42px; background: linear-gradient(180deg, #dcecff, #fff); position: relative; overflow: hidden; }
+    .chart:after { content: "⌁╱⌁╱⌁╱⌁╱"; color: #087cff; font-size: 29px; position: absolute; left: 5px; top: -2px; letter-spacing: 2px; }
+    .portfolio-preview { background: radial-gradient(circle at 80% 45%, #0b3b85, #020919 50%); color: #fff; }
+    .portfolio-preview .preview-bar { border-color: #17365d; }
+    .portfolio-preview .preview-title { font-size: 17px; }
+    .laptop { width: 118px; height: 75px; border: 4px solid #5d8cff; border-bottom-width: 8px; border-radius: 7px; background: repeating-linear-gradient(0deg, #0b1934 0 5px, #102d55 6px 7px); box-shadow: 0 0 20px #007bff40; display: flex; align-items: center; justify-content: center; color: #1aa9ff; font-size: 30px; transform: perspective(100px) rotateY(-8deg); }
+    .project-info { padding: 8px 10px 7px; }
+    .project-title-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .project-title { font-size: 14px; margin: 0; font-weight: 850; }
+    .live { font-size: 8px; color: #c7ffe1; background: #075e38; border-radius: 12px; padding: 4px 9px; white-space: nowrap; }
+    .project-description { color: #b6cbe6; font-size: 11px; margin: 4px 0 8px; max-width: 330px; }
+    .pills { display: flex; flex-wrap: wrap; gap: 7px; }
+    .pill { font-size: 9px; color: #d7eaff; background: #06284c; border: 1px solid #0b3b6d; padding: 3px 10px; border-radius: 15px; }
+    .project-link { display: inline-block; color: var(--cyan); font-size: 11px; font-weight: 750; margin-top: 7px; }
+    .contact-section { background: linear-gradient(100deg, #03142b, #04152c); padding: 12px 0; }
+    .contact-row { display: grid; grid-template-columns: 1.5fr .9fr .8fr auto auto; align-items: center; gap: 18px; }
+    .contact-lead { display: flex; gap: 15px; align-items: center; }
+    .send-icon { font-size: 30px; color: var(--blue); }
+    .contact-lead h2 { font-size: 17px; margin: 0 0 2px; }
+    .contact-lead p { font-size: 11px; color: #c4d6ed; margin: 0; }
+    .contact-item { display: flex; align-items: center; gap: 11px; min-width: 0; }
+    .contact-icon { flex: 0 0 43px; height: 43px; border-radius: 50%; display: grid; place-items: center; background: #07316b; color: #8ed3ff; font-size: 21px; }
+    .contact-item b { display: block; font-size: 12px; }
+    .contact-item small { display: block; color: #c2d4ec; font-size: 10px; overflow-wrap: anywhere; }
+    footer { background: #020a16; padding: 14px 0; color: #9bb5d4; font-size: 10px; }
+    .footer-row { display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+    .footer-right { display: flex; align-items: center; gap: 14px; }
+    .footer-right a:hover { color: var(--cyan); }
+    .heart { color: var(--blue); }
+    .modal-backdrop { display: none; position: fixed; inset: 0; z-index: 50; background: #000b; padding: 20px; align-items: center; justify-content: center; }
+    .modal-backdrop.open { display: flex; }
+    .modal { width: min(500px, 100%); background: #06172d; border: 1px solid #15518a; border-radius: 16px; padding: 25px; box-shadow: 0 20px 70px #0009; }
+    .modal h2 { margin-top: 0; }
+    .modal p { color: var(--muted); font-size: 14px; }
+    .modal label { display: block; font-size: 13px; margin: 12px 0 5px; }
+    .modal input, .modal textarea { width: 100%; background: #020b18; color: white; border: 1px solid #17436c; border-radius: 8px; padding: 11px; outline: none; }
+    .modal input:focus, .modal textarea:focus { border-color: var(--blue); }
+    .modal textarea { min-height: 100px; resize: vertical; }
+    .modal-actions { display: flex; gap: 10px; justify-content: end; margin-top: 15px; }
+    .toast { position: fixed; z-index: 60; right: 20px; bottom: 20px; background: #075e38; color: white; padding: 12px 18px; border-radius: 10px; display: none; box-shadow: 0 8px 30px #0006; }
+    .toast.show { display: block; }
+    @media (max-width: 1000px) {
+      .hero-inner { grid-template-columns: 1fr .6fr; }
+      .handwritten { display: none; }
+      .skills-row { grid-template-columns: 1fr; gap: 14px; }
+      .skill-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .contact-row { grid-template-columns: repeat(2, 1fr); }
+      .contact-lead { grid-column: 1 / -1; }
+      .contact-row > .btn { justify-self: start; }
+    }
+    @media (max-width: 700px) {
+      .container { width: min(100% - 28px, 520px); }
+      .nav { min-height: 60px; }
+      .brand { font-size: 20px; }
+      .brand-mark { font-size: 27px; }
+      .nav > .btn { display: none; }
+      .menu-toggle { display: block; }
+      .nav-links { display: none; position: absolute; left: 0; right: 0; top: 60px; padding: 10px 20px 18px; background: #03132a; border-bottom: 1px solid var(--line); flex-direction: column; gap: 0; align-items: stretch; }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px 5px; border-bottom-width: 1px; }
+      .hero-inner { grid-template-columns: 1fr; padding: 35px 0 0; gap: 0; }
+      .hero-copy { position: relative; z-index: 2; }
+      h1 { font-size: 43px; }
+      .intro { max-width: 430px; }
+      .handwritten { display: none; }
+      .skill-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .skill { min-height: 88px; }
+      .project-grid { grid-template-columns: 1fr; gap: 14px; }
+      .project-preview { height: 170px; }
+      .section-heading { align-items: start; }
+      .section-title { font-size: 23px; }
+      .contact-row { grid-template-columns: 1fr; gap: 15px; padding: 7px 0; }
+      .contact-lead { grid-column: auto; }
+      .contact-row > .btn { justify-self: stretch; }
+      .footer-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .footer-right { flex-wrap: wrap; gap: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="A&R Creations home"><span class="brand-mark">&lt;/&gt;</span><span>A&amp;R <b>Creations</b></span></a>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a class="active" href="#home">Home</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+      </nav>
+      <a class="btn outline small" href="https://wa.me/254746948200" target="_blank" rel="noreferrer">WhatsApp Us</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-inner">
+        <div class="hero-copy" id="about">
+          <p class="eyebrow">WE DESIGN AND BUILD</p>
+          <h1>A&amp;R<span class="gradient-text">Creations</span></h1>
+          <h2 class="role">Web Design &amp; Development</h2>
+          <p class="intro">We create modern, responsive websites that help businesses and organizations bring their ideas online.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#contact">Get In Touch</a>
+            <a class="btn outline" href="#projects">◉ &nbsp; View My Projects</a>
+          </div>
+          <div class="socials" aria-label="Social links">
+            <a href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub">◉</a>
+            <a href="https://linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn" style="color:#3da9ff">in</a>
+            <a href="https://x.com/" target="_blank" rel="noreferrer" aria-label="X">𝕏</a>
+            <a href="https://youtube.com/" target="_blank" rel="noreferrer" aria-label="YouTube" style="color:#ff4444">▶</a>
+          </div>
+        </div>
+        <div class="handwritten" aria-label="Design Build Create">Design<strong>Build</strong><strong>Grow</strong><div class="scribble"></div><div class="tagline">Thoughtful websites<br>for real businesses</div></div>
+      </div>
+    </section>
+
+    <section class="skills-section" id="skills">
+      <div class="container skills-row">
+        <div>
+          <h2 class="section-title"><span class="icon">&lt;/&gt;</span> My <span class="accent">Skills</span></h2>
+          <p class="section-copy">Digital services to help your business grow online.</p>
+        </div>
+        <div class="skill-grid">
+          <div class="skill"><div class="skill-logo blue">W</div><div class="skill-name">Website Development</div><div class="skill-desc">Responsive websites for your business</div></div>
+          <div class="skill"><div class="skill-logo green">↗</div><div class="skill-name">Search Engine Optimization</div><div class="skill-desc">Improve search visibility and reach</div></div>
+          <div class="skill"><div class="skill-logo cyan">@</div><div class="skill-name">Social Media Management</div><div class="skill-desc">Content planning and audience growth</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects-section" id="projects">
+      <div class="container">
+        <div class="section-heading">
+          <h2 class="section-title"><span class="icon">▱</span> Our <span class="accent">Projects</span></h2>
+        </div>
+        <div class="project-grid">
+          <article class="project-card">
+            <div class="project-info">
+              <div class="project-title-row"><h3 class="project-title">Champwrap</h3><span class="live">Live Website</span></div>
+              <p class="project-description">A live website project for Champwrap.</p>
+              <a class="project-link" href="https://champwrap.com/" target="_blank" rel="noreferrer">Visit Website →</a>
+            </div>
+          </article>
+          <article class="project-card">
+            <div class="project-info">
+              <div class="project-title-row"><h3 class="project-title">God Save We Worship Ministry</h3><span class="live">Live Website</span></div>
+              <p class="project-description">A live website project for God Save We Worship Ministry.</p>
+              <a class="project-link" href="https://www.godsaweworshipministry.org/" target="_blank" rel="noreferrer">Visit Website →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="container contact-row">
+        <div class="contact-lead"><div class="send-icon">➤</div><div><h2>Let's Work <span style="color:var(--cyan)">Together</span></h2><p>Have a project in mind? Send us a message on WhatsApp.</p></div></div>
+        <div class="contact-item"><div class="contact-icon">✉</div><div><b>Email</b><small>raphcreations@gmail.com</small></div></div>
+        <div class="contact-item"><div class="contact-icon">☎</div><div><b>WhatsApp</b><small>0746 948 200</small></div></div>
+        <button class="btn" id="sendMessage">Send Message →</button>
+        <a class="btn outline" href="https://wa.me/254746948200" target="_blank" rel="noreferrer">WhatsApp Us</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <div>© <span id="year">2026</span> A&amp;R Creations. All rights reserved.</div>
+      <div class="footer-right"><a href="#skills">Skills</a><span>|</span><a href="#projects">Projects</a><a href="https://wa.me/254746948200" target="_blank" rel="noreferrer">WhatsApp</a></div>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <h2 id="modalTitle">Let's talk about your project</h2>
+      <p>Share your details and we will open WhatsApp with your message ready to send.</p>
+      <form id="contactForm">
+        <label for="name">Your name</label><input id="name" name="name" autocomplete="name" required placeholder="Your name" />
+        <label for="email">Your email</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+        <label for="phone">Your phone number</label><input id="phone" name="phone" type="tel" autocomplete="tel" required placeholder="Your phone number" />
+        <label for="message">Message</label><textarea id="message" name="message" required placeholder="Tell us about your project..."></textarea>
+        <div class="modal-actions"><button type="button" class="btn outline" id="closeModal">Cancel</button><button class="btn" type="submit">Send with WhatsApp →</button></div>
+      </form>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status">Opening WhatsApp with your message.</div>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+      menuToggle.textContent = open ? '×' : '☰';
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.textContent = '☰';
+    }));
+
+    const sections = [...document.querySelectorAll('main section[id], #about')];
+    const navAnchors = [...navLinks.querySelectorAll('a')];
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id === 'about' ? 'home' : entry.target.id;
+          navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+        }
+      });
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    sections.forEach(section => observer.observe(section));
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const backdrop = document.getElementById('modalBackdrop');
+    const openModal = () => { backdrop.classList.add('open'); document.getElementById('name').focus(); };
+    const closeModal = () => backdrop.classList.remove('open');
+    document.getElementById('sendMessage').addEventListener('click', openModal);
+    document.querySelectorAll('.hero-actions a[href="#contact"]').forEach(a => a.addEventListener('click', event => { event.preventDefault(); openModal(); }));
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    document.getElementById('contactForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const data = new FormData(e.currentTarget);
+      const body = encodeURIComponent(`Hello A&R Creations,\n\nName: ${data.get('name')}\nEmail: ${data.get('email')}\nPhone: ${data.get('phone')}\n\nMessage:\n${data.get('message')}`);
+      closeModal();
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+      window.open(`https://wa.me/254746948200?text=${body}`, '_blank', 'noopener,noreferrer');
+    });
+  </script>
+</body>
+</html>
